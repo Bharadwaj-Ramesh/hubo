@@ -1621,8 +1621,9 @@
     <mechanicalReduction>1</mechanicalReduction>
     <motorTorqueConstant>1</motorTorqueConstant>
   </transmission>
-<!--  <gazebo>
-    <plugin name="pid_joints" filename="libpid_joints.so" />
-  </gazebo> -->
+  <gazebo>
+<!--    <plugin name="pid_joints" filename="libpid_joints.so" />  -->
+    <plugin name="hubo_stand" filename="/usr/share/drcsim-1.3/models/hubo/plugins/libhubo_stand.so" />
+  </gazebo>
 </robot>
 
