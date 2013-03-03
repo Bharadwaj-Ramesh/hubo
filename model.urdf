@@ -1623,7 +1623,9 @@
   </transmission>
   <gazebo>
 <!--    <plugin name="pid_joints" filename="libpid_joints.so" />  -->
-    <plugin name="hubo_stand" filename="/usr/share/drcsim-1.4/models/hubo/plugins/libhubo_stand.so" />
+<!--    <plugin name="hubo_stand" filename="/usr/share/drcsim-1.3/models/hubo/plugins/libhubo_stand.so" /> -->
+    <plugin name="hubo_stand" filename="/usr/share/drcsim-2.1/models/hubo/plugins/libhubo_stand.so" />  
+
   </gazebo>
 </robot>
 
