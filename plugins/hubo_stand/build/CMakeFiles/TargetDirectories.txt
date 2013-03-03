@@ -1,1 +1,0 @@
-/home/bharadwajramesh/hubo_stand/build/CMakeFiles/hubo_stand.dir
