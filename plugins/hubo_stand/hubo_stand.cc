@@ -122,13 +122,18 @@ namespace gazebo
       this->pid_rar.Init(390, 0, 0.1, 0, 0, 25, -25);
       this->pid_rar.SetCmd(this->target_position_);
       this->rar_joint_ = this->model_->GetJoint("RAR");
+// neck
+      this->pid_HNP.Init(390, 0, 0.1, 0, 0, 25, -25);
+      this->pid_HNP.SetCmd(this->target_position_);
+      this->HNP_joint_ = this->model_->GetJoint("HNP");
+
       this->last_update_time_ = this->model_->GetWorld()->GetSimTime();
       this->update_connection_ = event::Events::ConnectWorldUpdateStart(
         boost::bind(&PIDJoints::UpdatePID, this));
     }
     void UpdatePID()
     {
-//      this->last_update_time_ = current_time;
+//     this->last_update_time_ = current_time;
 //      gzdbg << "error [" << error
 //            << "] cmd [" << this->pid.GetCmd() << "]\n";
       loop_No = loop_No + 1; 
@@ -140,8 +145,8 @@ namespace gazebo
 
       this->pid_lhr.Update(error, dt);
       this->lhr_joint_->SetForce(0, this->pid_lhr.GetCmd());
-      gzdbg << "error [" << error
-            << "] cmd [" << this->pid_lhr.GetCmd() << "]" << "[ loop No [" << loop_No << "]\n";
+//     gzdbg << "error [" << error
+ //           << "] cmd [" << this->pid_lhr.GetCmd() << "]" << "[ loop No [" << loop_No << "]\n";
 
       error = this->lhp_joint_->GetAngle(0).Radian()
                    - target_position_;
@@ -251,6 +256,15 @@ namespace gazebo
                    - target_position_;
       this->pid_rwp.Update(error, dt);
       this->rwp_joint_->SetForce(0, this->pid_rwp.GetCmd());
+
+// neck
+
+      error = this->HNP_joint_->GetAngle(0).Radian()
+                   - target_position_;
+      this->pid_HNP.Update(error, dt);
+      this->HNP_joint_->SetForce(0, this->pid_HNP.GetCmd());
+//      gzdbg << "error [" << error
+ //           << "] cmd [" << this->pid_HNP.GetCmd() << "]\n";
       this->last_update_time_ = current_time;
 
     }
@@ -289,6 +303,10 @@ namespace gazebo
     common::PID pid_rkp;
     common::PID pid_rap;
     common::PID pid_rar;
+
+// neck
+
+    common::PID pid_HNP;
 
 // pid controllers for the leg joints
 
@@ -336,6 +354,8 @@ namespace gazebo
     physics::JointPtr rap_joint_;
     physics::JointPtr rar_joint_;
     physics::JointPtr rhy_joint_;
+// neck
+    physics::JointPtr HNP_joint_;
     physics::ModelPtr model_;
     event::ConnectionPtr update_connection_;
     common::Time last_update_time_;
